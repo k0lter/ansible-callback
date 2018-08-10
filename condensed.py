@@ -88,7 +88,10 @@ class CallbackModule(CallbackModule_default):
             args = u', '.join(u'%s=%s' % a for a in task.args.items())
             args = u' %s' % args
 
-        self._display.banner(u"TASK [%s%s]" % (task.get_name().strip(), args), newline=newline)
+        if task.action in ['include_tasks']:
+            self._display.banner(u"INCLUDE TASKS", newline=newline)
+        else:
+            self._display.banner(u"TASK [%s%s]" % (task.get_name().strip(), args), newline=newline)
         if self._display.verbosity >= 2:
             path = task.get_path()
             if path:
@@ -98,7 +101,7 @@ class CallbackModule(CallbackModule_default):
 
     def v2_runner_on_ok(self, result):
         self._progress[result._task._uuid] = True
-        
+
         if self._play.strategy == 'free' and self._last_task_banner != result._task._uuid:
             self._print_task_banner(result._task)
 
@@ -138,7 +141,7 @@ class CallbackModule(CallbackModule_default):
         else:
             msg += "%s" % result._host.get_name()
 
-        msg += " => (item=%s)" % (self._get_item(result._result),)
+        msg += " => (item=%s)" % (self._get_item_label(result._result),)
 
         if (self._display.verbosity > 0 or '_ansible_verbose_always' in result._result) and not '_ansible_verbose_override' in result._result:
             msg += " => %s" % self._dump_results(result._result)
@@ -157,8 +160,16 @@ class CallbackModule(CallbackModule_default):
             if diff:
                 self._display.display(u"\n" + diff.strip())
 
+    def v2_playbook_on_include(self, included_file):
+        self._display.clear_line()
+        basedir = included_file._task._loader.get_basedir()
+        for h in included_file._hosts:
+            msg = "    %s => %s" % (h, included_file._filename.replace(basedir, '').strip('/'))
+            self._display.display(msg, color=C.COLOR_SKIP)
+
     def v2_playbook_on_stats(self, stats):
-        self._display.display("\nPLAY RECAP\n")
+        self._display.clear_line()
+        self._display.display("PLAY RECAP\n")
         hosts = sorted(stats.processed.keys())
         for h in hosts:
             t = stats.summarize(h)
