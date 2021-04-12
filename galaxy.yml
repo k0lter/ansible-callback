@@ -1,14 +1,13 @@
 namespace: kolter
-name: condensed
-version: 0.1
+name: callback
+version: 1.0
 readme: README.md
 authors:
   - Emmanuel Bouthenot <kolter@openics.org>
-description: null
-license_file: COPYING
+description: Provides alternative stdout callback plugins
+license_file: LICENSE
 tags: [callback, stdout, print]
-repository: https://git.openics.org/kolter/ansible-callback-condensed
+repository: https://github.com/k0lter/ansible-callback.git
 documentation: null
-homepage: https://git.openics.org/kolter/ansible-callback-condensed
-issues: null
-#type: flatmap
+homepage: https://github.com/k0lter/ansible-callback
+issues: https://github.com/k0lter/ansible-callback/issues
