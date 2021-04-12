@@ -1,0 +1,14 @@
+namespace: kolter
+name: condensed
+version: 0.1
+readme: README.md
+authors:
+  - Emmanuel Bouthenot <kolter@openics.org>
+description: null
+license_file: COPYING
+tags: [callback, stdout, print]
+repository: https://git.openics.org/kolter/ansible-callback-condensed
+documentation: null
+homepage: https://git.openics.org/kolter/ansible-callback-condensed
+issues: null
+#type: flatmap
