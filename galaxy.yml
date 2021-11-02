@@ -1,6 +1,6 @@
 namespace: kolter
 name: callback
-version: 1.0
+version: 1.0.0
 readme: README.md
 authors:
   - Emmanuel Bouthenot <kolter@openics.org>
